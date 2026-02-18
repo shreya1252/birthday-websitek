@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For My Favorite Person ❤️</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+            text-align: center;
+            color: white;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3, #a18cd1);
+            background-size: 400% 400%;
+            animation: bg 12s ease infinite;
+            overflow-x: hidden;
+        }
+
+        @keyframes bg {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 48px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.8);
+        }
+
+        #countdown {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        .card {
+            width: 75%;
+            margin: 70px auto;
+            padding: 40px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 40px rgba(255,255,255,0.4);
+            font-size: 22px;
+            line-height: 36px;
+            white-space: pre-line;
+            animation: fade 2s ease-in-out;
+        }
+
+        @keyframes fade {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .heart {
+            position: fixed;
+            color: rgba(255,255,255,0.6);
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Counting Down To Your Special Day ❤️</h1>
+<div id="countdown"></div>
+<div class="card" id="dailyMessage"></div>
+
+<script>
+    const now = new Date();
+    const currentYear = now.getFullYear();
+
+    const startDate = new Date(currentYear, 1, 18); // Feb 18
+    const birthday = new Date(currentYear, 1, 25); // Feb 25
+
+    // If birthday already passed this year, use next year
+    if (now > birthday) {
+        birthday.setFullYear(currentYear + 1);
+        startDate.setFullYear(currentYear + 1);
+    }
+
+    const messages = [
+`Day 1 💕
+
+I don’t think you realize how special you are to me.
+The way you talk, the way you laugh, even the way you get annoyed —
+it all feels so familiar and comforting.
+
+Seven days left… and I’m already excited just thinking about your smile on your birthday.`,
+
+`Day 2 🌹
+
+You know what?
+Out of all the people in this world, I’m really glad our paths crossed.
+
+You make my normal days feel less ordinary.
+And honestly… I’m grateful for you more than I say.`,
+
+`Day 3 ✨
+
+Sometimes I wonder how someone like you
+can be so effortlessly amazing.
+
+I hope this year gives you the same happiness
+you unknowingly give me every single day.`,
+
+`Day 4 💖
+
+You’re not just important to me.
+You’re the person I think of when something good happens.
+You’re the person I want to tell everything to.
+
+Four more days… and I can’t wait to celebrate you.`,
+
+`Day 5 🥰
+
+I hope you always see yourself the way I see you —
+kind, strong, funny, and quietly incredible.
+
+The world is lucky to have you.
+And I’m even luckier.`,
+
+`Day 6 💫
+
+Your birthday is almost here…
+but truthfully, you deserve appreciation every single day.
+
+Thank you for being you.
+That’s more than enough.`,
+
+`Day 7 🎂
+
+Tomorrow is your big day.
+I hope you wake up feeling loved, valued, and important —
+because you truly are.
+
+And I hope I get to be part of many more birthdays with you ❤️`
+    ];
+
+    const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+
+    if (diff >= 0 && diff < messages.length) {
+        document.getElementById("dailyMessage").innerText = messages[diff];
+    } else if (diff >= messages.length) {
+        document.getElementById("dailyMessage").innerText =
+`🎉 HAPPY BIRTHDAY ❤️
+
+Today is all about you.
+I hope this year brings you growth, peace, success,
+and moments that make your heart genuinely happy.
+
+You deserve the best.
+Always.`;
+    } else {
+        document.getElementById("dailyMessage").innerText =
+"Something special is waiting for you very soon...";
+    }
+
+    // Countdown
+    const timer = setInterval(function() {
+        const nowTime = new Date().getTime();
+        const distance = birthday.getTime() - nowTime;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML =
+            "⏳ " + days + " days " + hours + " hours "
+            + minutes + " minutes " + seconds + " seconds ";
+
+        if (distance < 0) {
+            clearInterval(timer);
+        }
+    }, 1000);
+
+    // Floating hearts
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 15 + 20 + "px";
+        heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }
+
+    setInterval(createHeart, 900);
+</script>
+
+</body>
+</html>
